@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>2.谈谈CSS3中盒模型</title>
+	</head>
+
+	<body>
+		<!-- 
+		标准盒模型和怪异盒模型（IE盒模型），flex弹性伸缩盒模型，column多列布局盒模型
+		
+		答题技巧：
+		使用怪异盒模型（IE盒模型）的话我发现我写样式的时候更方便，不需要每次调整border等操作后调整盒子大小
+		所以我现在真实项目当中大部分都使用怪异盒模型（IE盒模型）了，包括我看了Element UI的源码也是默认就让
+		盒子使用box-sizing: border-box;
+		我通过分析思考，在项目中遇到什么痛点，所以我用了这种技术，我看了XXX的原理和源码都是这样做的
+		-->
+		<style type="text/css">
+			/*标准盒模型，设置的宽高是真实内容的宽高，还有padding,border,margin组成盒子*/
+			body {
+				box-sizing: content-box;
+			}
+			/*怪异盒模型（IE盒模型），设置的宽高是盒子的宽高，盒子大小是固定，css3新增*/
+			body {
+				box-sizing: border-box;
+			}
+		</style>
+	</body>
+
+</html>

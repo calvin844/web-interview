@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>4.移动端响应式布局开发的三大方案</title>
+	</head>
+
+	<body>
+		<!-- 
+		media：通过媒体查询，用于PC移动端一套方案
+		rem：等比缩放，PC移动端分别方案
+		flex：部分布局，配合使用，单独使用无法呈现效果
+		vh/vw：百分比布局
+		-->
+		<!-- 1. 使用css，让一个div消失 -->
+		<!-- 2. z-index的工作原理，适用范围（文档流） -->
+		<!-- 3. 谈谈Html5的理解 -->
+		<!-- 4. 如何使一个DIV里面的文字垂直居中，且该文字的大小根据屏幕大小自适应 -->
+		<!-- 5. 不考虑其他因素，下面哪种渲染性能高 -->
+		<!-- 第二种更高，渲染CSS从右到左，第二种只需要寻找a，而第一种还需要寻找渲染层级.box  -->
+		<style type="text/css">
+			.box a {}
+
+			a {}
+		</style>
+	</body>
+
+</html>

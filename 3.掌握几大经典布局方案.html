@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>3.掌握几大经典布局方案</title>
+	</head>
+
+	<body>
+		<!-- 
+		实现经典布局：左右固定，中间自适应（圣杯布局，双飞翼布局）
+		-->
+		<!-- 圣杯布局：浮动和margin -->
+		<!-- <style type="text/css">
+			html,
+			body {
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.clacontainer {
+				height: 100%;
+				padding: 0 200px;
+			}
+
+			.left,
+			.right {
+				width: 200px;
+				min-height: 200px;
+				background-color: lightblue;
+			}
+
+			.center {
+				width: 100%;
+				min-height: 400px;
+				background-color: lightsalmon;
+			}
+
+			.left,
+			.right,
+			.center {
+				float: left;
+			}
+			.left{
+				margin-left: -100%;
+				position: relative;
+				left: -200px;
+			}
+			.right{
+				margin-right: -200px;
+			}
+		</style>
+		<div class="clacontainer clearfix">
+			<div class="center"></div>
+			<div class="left"></div>
+			<div class="right"></div>
+		</div> -->
+
+		<!-- 双飞翼布局：浮动和margin -->
+		<!-- <style type="text/css">
+			html,
+			body {
+				width: 100%;
+				overflow: hidden;
+			}
+
+			.clacontainer,
+			.left,
+			.right {
+				float: left;
+			}
+
+			.clacontainer {
+				width: 100%;
+			}
+
+			.clacontainer .center {
+				margin: 0 200px;
+				min-height: 400px;
+				background-color: lightsalmon;
+			}
+
+			.left,
+			.right {
+				width: 200px;
+				min-height: 200px;
+				background-color: lightblue;
+			}
+
+			.left {
+				margin-left: -100%;
+			}
+
+			.right {
+				margin-left: -200px;
+			}
+		</style>
+		<div class=" clearfix">
+			<div class="clacontainer">
+				<div class="center"></div>
+			</div>
+			<div class="left"></div>
+			<div class="right"></div>
+		</div>
+
+
+		<!-- calc方式，计算表达式，效率低 -->
+
+		<!-- <style type="text/css">
+			.center {
+				width: calc(100% - 400px);
+				min-height: 400px;
+				background-color: #FFA07A;
+			}
+		</style>
+		
+			<div class="center"></div> -->
+
+
+		<!-- flex方式 -->
+		<!-- <style type="text/css">
+			html,
+			body {
+				overflow: hidden;
+			}
+
+			.clacontainer {
+				display: flex;
+				justify-content: space-between;
+				height: 100%;
+			}
+
+			.left,
+			.right {
+				flex: 0 0 200px;
+				height: 200px;
+				background-color: aqua;
+			}
+
+			.center {
+				flex: 1;
+				min-height: 400px;
+				background-color: aquamarine;
+			}
+		</style>
+
+		<div class="clacontainer">
+			<div class="left"></div>
+			<div class="center"></div>
+			<div class="right"></div>
+		</div> -->
+		
+		
+		<!-- 定位 -->
+		<style type="text/css">
+			html,
+			body {
+				overflow: hidden;
+			}
+		
+			.clacontainer {
+				position: relative;
+				height: 100%;
+			}
+		
+			.left,
+			.right {
+				position: absolute;
+				top: 0;
+				width: 200px;
+				min-height: 200px;
+				background-color: #7FFFD4;
+			}
+			.left{
+				left: 0;
+			}
+			.right{
+				right: 0;
+			}
+		
+			.center {
+				margin: 0 200px;
+				min-height: 400px;
+				background-color: antiquewhite;
+			}
+		</style>
+		
+		<div class="clacontainer">
+			<div class="left"></div>
+			<div class="center"></div>
+			<div class="right"></div>
+		</div>
+	</body>
+
+</html>

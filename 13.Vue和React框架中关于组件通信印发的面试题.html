@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>13.Vue和React框架中关于组件通信印发的面试题</title>
+	</head>
+
+	<body>
+		<!-- 
+		vue：
+		1. 属性传递（props）（父子组件）
+		2. 发布订阅（EventBus）：$on/$emit
+		3. Provide/inject（祖孙组件）
+		4. slot
+		5. $parent/$children
+		6. vuex（本地内存方案，任何组件通信）
+		
+		react:
+		1. 属性传递（props）（父子组件）
+		2. 发布订阅（兄弟组件）
+		3. React.creatContext（祖孙组件）
+		4. redux/react-redux/mobix/dva（本地内存方案，任何组件通信）
+		
+		vuex和localStorage和cookie和session的区别：
+		1. vuex：刷新消失
+		2. localStorage：本地存储方案，长期存储，由于是永久存储需要再设置一个存储时间，获取时对比存储时间，超过多久就从服务器重新获取，
+			缺点：大小限制：5M，明文存储
+		3. cookie：自带时间设置，但是有大小限制（4K）,清除浏览器历史信息时会被清除
+		4. session：服务端存储，服务器返回客户端信息时，会在响应头中带着set-cookie=connect.sid(就是sessionid)，客户端会把信息种植到本地的
+			cookie当中，并且是http-only，只能读取，不能修改，当客户端再次向服务器发送请求的时候，会默认在
+			请求头中cookies把connect.sid传递发给服务器，服务器拿到sid根据信息设置session信息和有效时间
+		
+		 -->
+	</body>
+
+</html>

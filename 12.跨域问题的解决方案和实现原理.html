@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>12.跨域问题的解决方案和实现原理</title>
+	</head>
+
+	<body>
+		<!-- 
+		浏览器本身的特点
+		浏览器自身ajax发送请求时有同源策略，协议、域名、端口号其中之一不同的不允许访问
+		
+		1. jsonp
+		script标签是不存在跨域问题的，jsonp就是动态生成一个script标签，把请求地址赋值给script
+		的src，再通过callback参数传递一个自定义方法名，当服务器返回数据时，会在数据前拼接上
+		自定义方法名作为字符串返回，返回后，浏览器会直接执行自定义方法，参数就是从服务器获取
+		的数据
+		缺点：只支持get（不安全，有缓存，有长度限制，需要服务器配合拼接字符串）
+		
+		2. iframe（中间的过渡）
+		iframe配合window.name，document.domin，location.hash，post message
+		缺点：必须主域相同，子域不同才能使用
+				
+		3. CORS跨域资源共享（都在服务器设置）
+		服务器端头部（header）设置：
+		允许的响应源（Access-Control-Allow-Origin）,设置为*表示所有人都允许，但是不能携带资源凭证
+		是否允许携带资源凭证（Access-Control-Allow-Credentials），允许的响应源设置*后，这里只能设置false
+		允许请求头（Access-Control-Allow-Headers）
+		允许请求方式（Access-Control-Allow-Methods）
+		一般发送请求前，浏览器会发送一个OPTIONS试探性请求，试探是否能和服务器连接
+		缺点：需要逐个配置响应源
+		
+		4. 基于http proxy跨域代理
+		
+		5. nginx反向代理
+		
+		答题技巧：一开始项目是使用jsonp的，后来发现jsonp局限性很大，只能get，不安全，
+		后来就尝试使用iframe，但是有主域限制，通过学习，我发现CORS和proxy都挺好用的，就引导公司配置使用这2种方式
+		 -->
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$.ajax({
+				url: 'http://127.0.0.1:8001/list',
+				method: 'get',
+				dataType: 'jsonp',
+				success: res => {
+					console.log(res)
+				}
+			})
+		</script>
+	</body>
+
+</html>

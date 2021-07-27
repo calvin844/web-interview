@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>19.正则的正向预查和负向预查</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 正则的正向预查和负向预查
+			// 正向预查(?=pattern):要匹配的字符串必须符合patterm条件，只是条件，不参与真正的捕获
+			var reg = /cainiao(?=8)/; //包含cainiao，后面必须是8
+			var str = 'cainiao9';
+			alert(reg.exec(str)) //返回null
+
+			// 负向预查(?!=pattern):要匹配的字符串必须不符合patterm条件!
+			var reg = /cainiao(?!=8)/
+			var str = 'cainiao9';
+			alert(reg.exec(str)) //成功匹配返回cainiao
+
+			// 编写一条正则，用来检验此规则：一个6~16位字符，必须同时包含大小写字母和数字
+			var reg = /(?!^[a-zA-Z]+$)(?!^[a-z0-9]+$)(?!^[A-Z0-9]+$)^[A-Za-z0-9]{6,16}$/
+			// (?!^[a-z]+$)：不能为纯小写字母
+
+			// 1-10位：数字、字母、下划线，必须包含下划线
+			var reg = /(?!=^[0-9a-zA-Z]+&)^\w{1,10}&/
+			
+			
+			// 数字、字母、下划线组成，而且必须包含下划线
+			var reg = /(?=_)^\w+/
+		</script>
+	</body>
+</html>

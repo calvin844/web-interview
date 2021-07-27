@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>22.类方法使用的链式写法</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 实现(5).add(3).minus(2)，结果为6
+
+			~ function() {
+				/*
+				每一个方法执行完都要返回Number这个类的实例（数字类型），
+				才可以继续调取Number类上的方法（链式写法）
+				想实现链式写法，把方法加入到当前实例所属类中，即可使用链式写法
+				*/
+				function check(n) {
+					// 检测传入参数类型，并转为数字类型
+					// 如果传入的是Undefined，那么就会转为无效数字NaN
+					n = Number(n)
+					return isNaN(n) ? 0 : n
+				}
+
+				function add(n) {
+					n = check(n)
+					// this只可能被改变指向，不能赋值
+					return this + n
+				}
+
+				function minus(n) {
+					n = check(n)
+					return this - n
+				}
+
+				// jquery源码中经常使用遍历赋值
+				['add', 'minus'].forEach(item => {
+					Number.prototype[item] = eval(item)
+				})
+				// 原始写法
+				// Number.prototype.add = add
+				// Number.prototype.minus = minus
+
+			}()
+
+			console.log((5).add(3).minus(2))
+		</script>
+	</body>
+</html>

@@ -11,57 +11,169 @@
 	<body>
 		<script type="text/javascript">
 			//数组去重
-			let ary = [12, 23, 12, 15, 25, 23, 25, 14, 16];
+			let ary1 = [12, 23, 12, 15, 25, 23, 25, 14, 16];
+
 			/* SET(SE6)，SET类返回SET实例，会自动把数组去重 */
 			// let arr = [...new Set(ary)]; //展开运算符
 			// let arr = Array.from(new Set(ary)) //类实例转为数组
 
 			/*拿出当前项和后面的内容进行比较*/
-
 			// 使用splice方法：
 			// 1. 会改变原数组，导致原数组内索引改变，下次循环获取下标不正常，引起数组塌陷，需要使用i--
 			// 2. 性能不好，当前项一旦删除，后面项索引都要变
-			for (let i = 0; i < ary.length - 1; i++) {
-				let item = ary[i],
-					args = ary.slice(i + 1);
-				if (args.indexOf(item) > -1) {
-					//大于-1表示包含，就把当前项删除
-					ary.splice(i, 1)
-					i--
-				}
-			}
+			// for (let i = 0; i < ary.length - 1; i++) {
+			// 	let item = ary[i],
+			// 		args = ary.slice(i + 1);
+			// 	if (args.indexOf(item) > -1) {
+			// 		//大于-1表示包含，就把当前项删除
+			// 		ary.splice(i, 1)
+			// 		i--
+			// 	}
+			// }
+			// 使用新建数组的filter方法：
+			// for (let i = 0; i < ary.length - 1; i++) {
+			// 	let item = ary[i],
+			// 		args = ary.slice(i + 1);
+			// 	if (args.indexOf(item) > -1) {
+			// 		//大于-1表示包含
+			// 		ary[i] = null
+			// 	}
+			// }
+			// ary = ary.filter(item => item !== null)
+			// 使用新建数组的push方法：
+			// let arr = []
+			// for (let i = 0; i < ary.length; i++) {
+			// 	let item = ary[i],
+			// 		args = ary.slice(i + 1);
+			// 	if (!args.indexOf(item) > -1) {
+			// 		arr.push(item)
+			// 	}
+			// }
+			// 使用最后一项替换：
+			// let arr = []
+			// for (let i = 0; i < ary.length; i++) {
+			// 	let item = ary[i],
+			// 		args = ary.slice(i + 1);
+			// 	if (args.indexOf(item) > -1) {
+			// 		ary[i]=ary[ary.length-1]
+			// 		ary.length--
+			// 		i--
+			// 	}
+			// }
 
-			// 使用splice方法：
-			// 1. 会改变原数组，导致原数组内索引改变，下次循环获取下标不正常，引起数组塌陷，需要使用i--
-			// 2. 性能不好，当前项一旦删除，后面项索引都要变
-			for (let i = 0; i < ary.length - 1; i++) {
-				let item = ary[i],
-					args = ary.slice(i + 1);
-				if (args.indexOf(item) > -1) {
-					//大于-1表示包含，就把当前项删除
-					ary[i] = null
-				}
-			}
+			/*拿数组中的每项向容器中存储，如果已经存储过了，把当前项干掉*/
+			// let obj = {};
+			// for (let i = 0; i < ary.length; i++) {
+			// 	let item = ary[i]
+			// 	if (typeof obj[item] !== 'undefined') {
+			// 		ary[i] = ary[ary.length - 1]
+			// 		ary.length--
+			// 		i--
+			// 		continue
+			// 	}
+			// 	obj[item] = item
+			// }
+			// obj=null
 
-			// 使用push方法：
-			let arr = []
-			for (let i = 0; i < ary.length; i++) {
-				let item = ary[i],
-					args = ary.slice(i + 1);
-				if (!args.indexOf(item) > -1) {
-					arr.push(item)
-				}
-			}
-
-
+			/*先排序，再相邻比较（基于正则）*/
 			// ary.sort((a, b) => a - b);
 			// let str = ary.join('@') + '@'
-			// let reg = /(\d+@)\l*/g
+			// let reg = /(\d+@)\1 */g
 			// ary = []
 			// str.replace(reg, (n, m) => {
-			// 	m = Number(m.slice(0, m.length - 1))
-			// 	ary.push(m)
+			// 	// m = Number(m.slice(0, m.length - 1))
+			// 	// ary.push(m)
+			// 	// parseFloat只获取字符串的数字部分
+			// 	ary.push(parseFloat(m))
 			// })
+			// console.log(ary)
+
+
+
+
+
+
+
+			// 冒泡排序：相邻元素大小比较，小的放前面，大的放后面
+			// function bubble(ary) {
+			// 	let temp = null;
+			// 	// 外层循环I控制比较的轮数
+			// 	for (let i = 0; i < ary.length - 1; i++) {
+			// 		// 里层循环控制每一轮比较的次数J
+			// 		for (let j = 0; j < ary.length - 1 - i; j++) {
+			// 			if (ary[j] > ary[j + 1]) {
+			// 				// 当前项大于后一项
+			// 				temp = ary[j]
+			// 				ary[j] = ary[j + 1]
+			// 				ary[j + 1] = temp
+
+			// 				// ES6解构赋值元素换位
+			// 				// [ary[j],ary[j + 1]] = [ary[j + 1],ary[j]];
+
+			// 			}
+			// 		}
+			// 	}
+			// 	return ary
+			// }
+			// let ary = [12, 8, 24, 16, 1]
+			// ary = bubble(ary)
+			// console.log(ary)
+
+
+			// 插入排序：准备一个容器，循环源数组，逐个插入新容器，插入时与容器现有元素比较，按从小到大的方式找到插入位置插入
+			// function insert(ary) {
+			// 	// 1. 准备一个新的数组，用来存储插入的元素
+			// 	let handle = []
+			// 	handle.push(ary[0])
+
+			// 	// 2. 从原数组第二项开始依次比较插入。一直到原数组结束
+			// 	for (let i = 1; i < ary.length; i++) {
+			// 		// A是新获取的元素
+			// 		let A = ary[i]
+			// 		// 和handle已有元素依次比较（从后向前）
+			// 		for (let j = handle.length - 1; j >= 0; j--) {
+			// 			// 每一次要比较的已有元素
+			// 			let B = handle[j]
+			// 			// 如果当前新元素比已有元素大，就把A放到B后面
+			// 			if (A > B) { 
+			// 				handle.splice(j + 1, 0, A)
+			// 				break;
+			// 			}
+			// 			// 已经比到容器内第一项，我们把新元素放到容器的前面
+			// 			if (j === 0) {
+			// 				handle.unshift(A)
+			// 			}
+			// 		}
+			// 	}
+			// 	return handle
+			// }
+			// let ary = [12, 8, 24, 16, 1]
+			// ary = insert(ary)
+			// console.log(ary)
+
+
+			// 快速排序：递归处理，取出中间项，把剩下的元素与中间项比较，大的放左边数组，小的放右边数组，一直到原数组，左边数组，右边数组都处理完成，再把他们拼接起来，排序算法中快速排序性能最好
+			function quick(ary) {
+				// 4. 结束递归（当ARY中小雨等于一项，则不用处理） 
+				if (ary.length <= 1) {
+					return ary
+				}
+				// 1. 找到数组的中间项，在原有的数组中把它移除
+				let middleIndex = Math.floor(ary.length / 2);
+				let middleValue = ary.splice(middleIndex, 1)[0]
+				// 2. 准备左右两个数组，循环剩下数组中的每一项，比当前项小的放到左边数组中，反之放到右边数组中
+				let aryLeft = [],
+					aryRight = [];
+				for (let i = 0; i < ary.length; i++) {
+					let item = ary[i]
+					item < middleValue ? aryLeft.push(item) : aryRight.push(item)
+				}
+				// 3. 递归方式龙左右两边的数组持续这样处理，一直到左右两边都排好序为止（最后让左边+中间+右边拼接成最后的结果）
+				return quick(aryLeft).concat(middleValue, quick(aryRight))
+			}
+
+			let ary = [12, 8, 15, 16, 1, 24]
+			ary = quick(ary)
 			console.log(ary)
 		</script>
 	</body>

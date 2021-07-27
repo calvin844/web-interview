@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>16.斐波那契数列</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 斐波那契数列：当前值为前2项值相加的值，是一个固定数组[1,1,2,3,5,8.....]
+			// 斐波那契数列题目：传参索引值返回相应值
+			// [1,1,2,3,5,8,13,21],fibonacci(4)=>5
+			function fibonacci(n) {
+				if (n <= 1) return 1
+				let arr = [1, 1]
+				// 即将要创建多少个元素
+				let i = n + 1 - 2
+				while (i > 0) {
+					let a = arr[arr.length - 2],
+					let	b = arr[arr.length - 1];
+					arr.push(a + b);
+					i--
+				}
+				return arr[arr.length + 1]
+			}
+
+
+			function fibonacci(count) {
+				function fn(count, curr = 1, next = 1) {
+					if (count == 0) {
+						return curr;
+					} else {
+						return fn(count - 1, next, curr + next)
+					}
+				}
+				return fn(count)
+			}
+		</script>
+	</body>
+</html>

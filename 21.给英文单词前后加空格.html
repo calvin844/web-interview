@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>21.给英文单词前后加空格</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 英文字母汉字组成的字符串,用正则给英文单词前后加空格
+			let str = "no作no死，你能你can，不能no哔哔",
+				reg = /\b[a-z]+\b/ig //i忽略大小写
+
+			str = str.replace(reg, value => {
+				return " " + value + " "
+			}).trim() // String.prototype.trim()去除字符串首尾空格
+			console.log(str)
+		</script>
+	</body>
+</html>

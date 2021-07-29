@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>27.检验URL格式</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			/*
+			在输入框中如何判断输入的是一个正确的网址
+			例如：用户输入一个字符串，检验是否符合URL网址的格式
+		*/
+
+			let str = "http://www.biadu.com/index.html?lx=1&from=wx#video"
+			/*
+				分析格式：
+				1. 协议：//  http/https/ftp
+				2. 域名：
+					www.baidu.com
+					baidu.com
+					a.b.baidu.com
+					a.b.baidu.com.cn
+				3. 请求路径
+					/
+					/index.html
+					/stu/index.html
+					/stu/
+				4. 问号传参
+					?xxxx=xxxx&xxx=xxx
+				5. 哈希值
+				  #xxx
+			*/
+			let reg = /^((http|https|ftp):\/\/)?(([\w-]+\.)+[a-z0-9]+)((\/[^/?#]*)+)?(\?[^#]+)?(#.+)?$/i
+			console.log(reg.exec(str))
+		</script>
+	</body>
+</html>

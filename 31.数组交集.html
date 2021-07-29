@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>31.数组交集</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			/*
+			给定两个数组，写一个方法来计算它们的交集
+			*/
+			let nums1 = [12, 23, 34, 23, 45, 34, 25, 46, 35]
+			let nums2 = [10, 35, 24, 36, 47, 56, 23]
+
+			// ES5写法
+			// let arr = []
+			// for (let i = 0; i < nums1.length; i++) {
+			// 	let item1 = nums1[i]
+			// 	for (let k = 0; k < nums2.length; k++) {
+			// 		let item2 = nums2[k]
+			// 		if (item1 === item2) {
+			// 			arr.push(item1)
+			// 			break
+			// 		}
+			// 	}
+			// }
+
+			// ES6写法
+			// 这种写法有重复匹配的问题，如果nums1出现23比nums2多，就会出现多个23交集
+			// let arr = nums1.filter(item => nums2.includes(item))
+
+			// 匹配过后删除相应元素，避免重复匹配
+			let arr = []
+			nums1.forEach((item, index) => {
+				let n = nums2.indexOf(item)
+				if (n >= 0) {
+					arr.push(item);
+					nums1.splice(index, 1)
+					nums2.splice(n, 1)
+				}
+			})
+			console.log(arr)
+
+			// 差集：nums1有，nums2没有的
+			// 并集：拼接后去重
+			// 补集：nums1的补集就是把nums2中nums1没有的补进去
+		</script>
+	</body>
+</html>

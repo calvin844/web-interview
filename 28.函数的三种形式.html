@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>28.函数的三种形式</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function Foo() {
+				// 把window上的Foo.a改为当前函数
+				Foo.a = function() {
+					console.log(1)
+				}
+				// 自身实例上的私有方法a改为当前函数
+				this.a = function() {
+					console.log(2)
+				}
+			}
+			// 把Foo当作类，在原型上设置实例公有的属性方法 =>实例.a()
+			Foo.prototype.a = function() {
+				console.log(3)
+			}
+			// 把Foo当作普通对象设置私有的属性方法 =>Foo.a()
+			Foo.a = function() {
+				console.log(4)
+			}
+			
+			Foo.a() //4 
+			let obj = new Foo()
+			// 优先寻找私有属性上的方法，找到就不会再找公有属性prototype上的了
+			obj.a() //2
+			Foo.a() //1
+		</script>
+	</body>
+</html>

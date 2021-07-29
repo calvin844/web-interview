@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>34.手写new</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function Dog(name) {
+				this.name = name
+			}
+			Dog.prototype.bark = function() {
+				console.log('wangwang');
+			}
+			Dog.prototype.sayName = function() {
+				console.log('my name is ' + this.name)
+			}
+
+			// let sanmao = new Dog('三毛')
+			// sanmao.sayName()
+			// sanmao.bark();
+
+			/*
+				new后发生什么事情？
+					1. 像普通函数执行一样，形成一个私有的作用域
+							+形参赋值
+							+变量提升
+					2. 默认创建一个对象，让函数中的this执行这个对象，这个对象就是当前类的一个实例
+					3. 代码执行
+					4. 默认把创建的对象返回
+			*/
+
+			/*
+				基于内置的New关键字，我们可以创建Dog的一个实例sanmao，实例可以调取原型上的属性和方法，
+				现在的需求是：自己实现一个_new方法，也能模拟出内置new后的结果
+		 */
+			// Fn当前要new的类，arg后期需要给构造函数传递的参数信息
+			function _new(Fn, ...arg) {
+				// 创建一个空对象，让他的原型链指向Fn.prototype（作为Fn的一个实例）
+				// 完整写法：
+				// let obj = {}
+				// obj.__proto__ = Fn.prototype
+				// 使用Object的create方法（创建一个空对象，让空对象的原型链指向参数，即参数所属构造函数的实例）简写：
+				let obj = Object.create(Fn.prototype)
+				Fn.call(obj, ...arg);
+				return obj
+			}
+			let sanmao = _new(Dog, '三毛')
+			sanmao.sayName() //my name is 三毛
+			sanmao.bark(); //wangwang
+			console.log(sanmao instanceof Dog) //true
+		</script>
+	</body>
+</html>

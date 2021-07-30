@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>37.匿名函数设置了函数名后</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var b = 10;
+			(function b() {
+				b = 20
+				console.log(b) //函数b
+			})()
+			console.log(b) //10
+			
+			// 定义私有变量的方法：函数内部定义的变量和传递的形参
+			(function b() {
+				var b = 20 // 定义私有变量
+				console.log(b) //20 ,优先获取私有变量
+			})()
+			console.log(b) //10
+			
+			
+			let fn = function aaa(){
+				console.log(aaa) //就是当前函数
+			}
+			aaa()
+			// 1. 本应匿名的函数如果设置了函数名，在外面还是没法调用的，但是在函数里面可以使用
+			// 2. 类似使用const创建常量一样，这个名字存储的值不能被修改（非严格模式下不会报错，但是不会有效果，严格模式下直接报错）
+			
+			
+		</script>
+	</body>
+</html>

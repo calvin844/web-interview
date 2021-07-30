@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>40.对象转为数组</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			let obj = {
+				1: 222,
+				2: 123,
+				5: 888
+			}
+			// 转为数组[222,123,null,null,888,null,null,null,null,null,null,null]
+			
+			// 第一种方法：
+			// let arr = new Array(12).fill(null).map((item, index) => {
+			// 	return obj[index + 1] || null
+			// })
+
+
+			// 第二种方法：
+			// Array.from(obj) //只能创建一个空数组，因为obj中没有length属性
+			// obj.length = 13
+			// // Array.from(obj) //创建一个长度为12数组，用undefined填充，obj键值为数组下标赋值
+			// let arr = Array.from(obj).slice(1).map(item => {
+			// 	return typeof item === 'undefined' ? null : item
+			// })
+
+
+			// 第三种方法：
+			// Object.keys()：获取obj中所有可枚举的属性名，以数组的方式返回
+			// console.log(Object.keys(obj)) //[1,2,5]
+			let arr = new Array(12).fill(null)
+			Object.keys(obj).forEach(item => {
+				arr[item - 1] = obj[item]
+			})
+			console.log(arr)
+			
+			// Array.prototype
+			// push/pop/shift/unshift/splice/slice/concat/join
+			// /toString/reverse/sort/indexOf/lastIndexOf/includes/forEach/map/some/find/flat/fill/filter....
+		</script>
+	</body>
+</html>

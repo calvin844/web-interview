@@ -1,56 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>9.JS练习</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>9.JS练习</title>
+</head>
 
-	<body>
-		<script type="text/javascript">
-			// 1
-			// function A() {
-			// 	alert(1)
-			// }
+<body>
+	<script type="text/javascript">
+		// 1
+		// function A() {
+		// 	alert(1)
+		// }
 
-			// function Func() {
-			// 	A = function() {
-			// 		alert(2)
-			// 	};
-			// 	return this
-			// }
-			// Func.A = A
-			// Func.prototype = {
-			// 	A: () => {
-			// 		alert(3)
-			// 	}
-			// }
-			// A() //1
-			// Func.A() //1
-			// Func().A() //2
-			// new Func.A() //1
-			// new Func().A() //3
-			// new new Func().A() //箭头函数由于没有原型链的，没有原型链就表示没有构造函数，所以不能被new调用，普通函数可以通过new方法调用
+		// function Func() {
+		// 	A = function() {
+		// 		alert(2)
+		// 	};
+		// 	console.log(this)
+		// 	return this
+		// }
+		// Func.A = A
+		// Func.prototype = {
+		// 	A: () => {
+		// 		alert(3)
+		// 	}
+		// }
+		// A() //1
+		// Func.A() //1
+		// Func().A() //2
+		// new Func.A() //1
+		// new Func().A() //3
+		// new new Func().A() //箭头函数由于没有原型链的，没有原型链就表示没有构造函数，所以不能被new调用，普通函数可以通过new方法调用
 
-			// var x = 2;
-			// var y = {
-			// 	x: 3,
-			// 	z: (function(x) {
-			// 		this.x *= x;
-			// 		x += 2;
-			// 		return function(n) {
-			// 			this.x *= n
-			// 			x += 3
-			// 			console.log(x)
-			// 		}
-			// 	})(x)
-			// }
-			// var m = y.z
-			// m(4)
-			// y.z(5)
-			// console.log(x, y.x)
+		// var x = 2;
+		// var y = {
+		// 	x: 3,
+		// 	z: (function (x) {
+		// 		// 自执行函数的this为window
+		// 		// 形参取值为window下的x
+		// 		this.x *= x;
+		// 		x += 2;
+		// 		return function (n) {
+		// 			this.x *= n
+		// 			console.log('return', this.x)
+		// 			x += 3
+		// 			console.log('return', x)
+		// 		}
+		// 	})(x)
+		// }
+		// var m = y.z
+		// m(4)
+		// y.z(5)
+		// console.log(x, y.x)
 
 
 			// ==时会默认转换类型再比较，===时是直接值比较
@@ -76,14 +80,14 @@
 			// 		return ++i
 			// 	}
 			// })
-			
+
 			// 第三种：数组比较时也是先调用toString，我们把toString方法改为shift，每次把数组第一个元素返回并删除
 			// var a = [1,2,3]
 			// a.toString = a.shift;
-			if (a == 1 && a == 2 & a == 3) {
-				console.log('条件成立')
-			}
-		</script>
-	</body>
+			// if (a == 1 && a == 2 & a == 3) {
+			// 	console.log('条件成立')
+			// }
+	</script>
+</body>
 
 </html>

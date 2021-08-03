@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>1. css的垂直居中方案</title>
-		<style>
-			html,
-			body {
-				height: 100%;
-				overflow: hidden;
-			}
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>1. css的垂直居中方案</title>
+	<style>
+		html,
+		body {
+			height: 100%;
+			overflow: hidden;
+		}
 
-			.box {
-				box-sizing: border-box;
-				width: 100px;
-				height: 50px;
-				line-height: 48px;
-				text-align: center;
-				font-size: 16px;
-				border: 1px solid lightblue;
-				background-color: lightcyan;
-			}
+		.box {
+			box-sizing: border-box;
+			width: 100px;
+			height: 50px;
+			line-height: 48px;
+			text-align: center;
+			font-size: 16px;
+			border: 1px solid lightblue;
+			background-color: lightcyan;
+		}
 
-			/*定位1，必须清楚盒子宽高*/
-			body {
-				position: relative;
-			}
+		/*定位1，必须清楚盒子宽高*/
+		body {
+			position: relative;
+		}
 
-			/*
-			.box {
-				position: absolute;
-				 	left: 50%;
-				top: 50%;
-				margin-top: -25px;
-			 	margin-left: -50px;
-			}*/
+		/*
+		.box {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-top: -25px;
+			margin-left: -50px;
+		}
+		*/
 
-			/*定位2，必须设置盒子宽高，但不需要考虑*/
-			/* .box{
+		/*定位2，必须设置盒子宽高，但不需要考虑*/
+		/* .box{
 				position: absolute;
 				top:0;
 				left: 0;
@@ -48,46 +49,47 @@
 				margin: auto;
 			} */
 
-			/*定位3，不需要具体宽高，兼容性不好*/
-			/* .box{
+		/*定位3，不需要具体宽高，兼容性不好*/
+		/* .box{
 				position: absolute;
 				left: 50%;
 				top: 50%;
 				transform: translate(-50%,-50%);
 			} */
 
-			/*flex，也是有兼容问题，移动端适合*/
-			/* body{
+		/*flex，也是有兼容问题，移动端适合*/
+		/* body{
 				display: flex;
 				justify-content: center;
 				align-items: center;
 			} */
 
-			/* table-cell 要求父级必须有固定宽高，不能是百分比*/
-			body {
-				display: table-cell;
-				vertical-align: middle;
-				text-align: center;
-				background-color: lightcoral;
-				width: 100vh;
-				height: 100vh;
-			}
-			.box{
-				display: inline-block;
-			}
-		</style>
-	</head>
+		/* table-cell 要求父级必须有固定宽高，不能是百分比*/
+		body {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			background-color: lightcoral;
+			width: 100vh;
+			height: 100vh;
+		}
 
-	<body>
-		<!-- 
+		.box {
+			display: inline-block;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- 
 		面试答题技巧：
 			这种情况在我过往的项目中我经常遇见，以前我是XXXXX这样做的，后来随着CSS3兴起，我又使用了XXX的解决办法，后来我在网上看到
 		别人是那样解决的，发现也是可以的 
 	-->
-		<div class="box" id="box">
-			垂直居中方案
-		</div>
-		<script type="text/javascript">
+	<div class="box" id="box">
+		垂直居中方案
+	</div>
+	<script type="text/javascript">
 			// JS方案
 			// let HTML = document.documentElement,
 			// 	winW = HTML.clientWidth
@@ -98,7 +100,7 @@
 			// box.style.position = "absolute"
 			// box.style.left = (winW - boxW) / 2 + 'px'
 			// box.style.top = (winH - boxH) / 2 + 'px'
-		</script>
-	</body>
+	</script>
+</body>
 
 </html>

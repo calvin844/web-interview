@@ -1,127 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>29.实现图片的懒加载</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>29.实现图片的懒加载</title>
+</head>
 
-	<body>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script type="text/javascript">
-			/*
-				1. 图片懒加载是前端性能优化的重要方案：
-					通过图片或者数据的延迟加载，我们可以加快页面渲染的速度，让第一次打开页面的速度变快
-					只有滑动到某个区域，我们才加载真实的图片，这样也可以节省加载的流量
-				2. 处理方法：
-					把所有需要延迟加载的图片用盒子包起来，设置宽高和默认占位图
-					开始让所有的IMG的SRC为空，把真实图片的地址放到Img的自定义属性上，让IMG隐藏
-					等到所有其他资源都加载完成后，我们再开始加载图片
-					对于很多图片，需要当页面滚动的时候，当前图片区域完全显示出来后再加载真实图片
-					https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg
-			*/
-		</script>
-		<style type="text/css">
-			* {
-				margin: 0;
-				padding: 0;
-			}
+<body>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		/*
+			1. 图片懒加载是前端性能优化的重要方案：
+				通过图片或者数据的延迟加载，我们可以加快页面渲染的速度，让第一次打开页面的速度变快
+				只有滑动到某个区域，我们才加载真实的图片，这样也可以节省加载的流量
+			2. 处理方法：
+				把所有需要延迟加载的图片用盒子包起来，设置宽高和默认占位图
+				开始让所有的IMG的SRC为空，把真实图片的地址放到Img的自定义属性上，让IMG隐藏
+				等到所有其他资源都加载完成后，我们再开始加载图片
+				对于很多图片，需要当页面滚动的时候，当前图片区域完全显示出来后再加载真实图片
+				https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg
+		*/
+	</script>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
 
-			.container {
-				margin: 0 auto;
-				width: 800px;
-			}
+		.container {
+			margin: 0 auto;
+			width: 800px;
+		}
 
-			.imgBox {
-				height: 637px;
-				overflow: hidden;
-				background: #bbb;
-				margin-bottom: 10px;
-			}
+		.imgBox {
+			height: 637px;
+			overflow: hidden;
+			background: #bbb;
+			margin-bottom: 10px;
+		}
 
-			.imgBox img {
-				display: none;
-				width: 100%;
-			}
-		</style>
+		.imgBox img {
+			display: none;
+			width: 100%;
+		}
+	</style>
 
 
-		<div class="container">
-			<div class="imgBox">
-				<img src=""
-					data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
-			</div>
-			<div class="imgBox">
-				<img src=""
-					data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
-			</div>
-			<div class="imgBox">
-				<img src=""
-					data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
-			</div>
-			<div class="imgBox">
-				<img src=""
-					data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
-			</div>
-			<div class="imgBox">
-				<img src=""
-					data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
-			</div>
+	<div class="container">
+		<div class="imgBox">
+			<img src=""
+				data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
 		</div>
+		<div class="imgBox">
+			<img src=""
+				data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
+		</div>
+		<div class="imgBox">
+			<img src=""
+				data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
+		</div>
+		<div class="imgBox">
+			<img src=""
+				data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
+		</div>
+		<div class="imgBox">
+			<img src=""
+				data-img="https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg" />
+		</div>
+	</div>
 
 
-		<script type="text/javascript">
-			// 单张懒加载
-			// let $imgBox = $('.imgBox'),
-			// 	$img = $imgBox.children('img'),
-			// 	$window = $(window)
-			// // 所有资源都加载完毕，$(document).ready() => DOM节点加载完毕
-			// // 同时绑定在onload和onscroll事件上，jquery多事件绑定
-			// $(window).on('load scroll', function() {
-			// 	if ($img.attr('isLoad') === 'true') {
-			// 		// 加载过就不会重新加载
-			// 		return
-			// 	}
-			// 	// outerHeight元素可视高度
-			// 	let $A = $imgBox.outerHeight() + $imgBox.offset().top,
-			// 		$B = $window.outerHeight() + $window.scrollTop()
-			// 	if ($A <= $B) {
-			// 		$img.attr('src', $img.attr('data-img'));
-			// 		$img.on('load', function() {
-			// 			// 加载成功后，显示图片
-			// 			// $img.css('display', 'block')
-			// 			$img.stop().fadeIn() //jquery渐显动画
-			// 		})
-			// 		$img.attr('isLoad', true) //attr存储的自定义属性值都是字符串“true”
-			// 	}
-			// })
+	<script type="text/javascript">
+		// 单张懒加载
+		// let $imgBox = $('.imgBox'),
+		// 	$img = $imgBox.children('img'),
+		// 	$window = $(window)
+		// // 所有资源都加载完毕，$(document).ready() => DOM节点加载完毕
+		// // 同时绑定在onload和onscroll事件上，jquery多事件绑定
+		// $(window).on('load scroll', function() {
+		// 	if ($img.attr('isLoad') === 'true') {
+		// 		// 加载过就不会重新加载
+		// 		return
+		// 	}
+		// 	// outerHeight元素可视高度
+		// 	let $A = $imgBox.outerHeight() + $imgBox.offset().top,
+		// 		$B = $window.outerHeight() + $window.scrollTop()
+		// 	if ($A <= $B) {
+		// 		$img.attr('src', $img.attr('data-img'));
+		// 		$img.on('load', function() {
+		// 			// 加载成功后，显示图片
+		// 			// $img.css('display', 'block')
+		// 			$img.stop().fadeIn() //jquery渐显动画
+		// 		})
+		// 		$img.attr('isLoad', true) //attr存储的自定义属性值都是字符串“true”
+		// 	}
+		// })
 
 
 
-			// 多张张懒加载
-			let $container = $('.container'),
-				$imgBoxs = null,
-				$window = $(window)
+		// 多张张懒加载
+		let $container = $('.container'),
+			$imgBoxs = null,
+			$window = $(window)
 
-			$imgBoxs = $container.children('.imgBox')
+		$imgBoxs = $container.children('.imgBox')
 
-			$window.on('load scroll', function() {
-				let $B = $window.outerHeight() + $window.scrollTop()
-				$imgBoxs.each((index, item) => {
-					let $item = $(item),
-						$itemA = $item.outerHeight() + $item.offset().top,
-						$isLoad = $item.attr('isLoad')
-					if ($itemA <= $B && $isLoad !== 'true') {
-						$item.attr('isLoad', true) //attr存储的自定义属性值都是字符串“true”
-						let $img = $item.children('img')
-						$img.attr('src', $img.attr('data-img'));
-						$img.on('load', () => $img.stop().fadeIn())
-					}
-				})
+		$window.on('load scroll', function () {
+			let $B = $window.outerHeight() + $window.scrollTop()
+			$imgBoxs.each((index, item) => {
+				let $item = $(item),
+					$itemA = $item.outerHeight() + $item.offset().top,
+					$isLoad = $item.attr('isLoad')
+				if ($itemA <= $B && $isLoad !== 'true') {
+					$item.attr('isLoad', true) //attr存储的自定义属性值都是字符串“true”
+					let $img = $item.children('img')
+					$img.attr('src', $img.attr('data-img'));
+					$img.on('load', () => $img.stop().fadeIn())
+				}
 			})
-		</script>
-		<!-- https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg -->
-	</body>
+		})
+	</script>
+	<!-- https://imgcps.jd.com/ling4/100016250494/5Yaw566x5rSX6KGj5py6/5riF5YeJ6YCB56aP5Yip77yB/p-5bd8253082acdd181d02fa75/2454094b/cr/s/q.jpg -->
+</body>
+
 </html>

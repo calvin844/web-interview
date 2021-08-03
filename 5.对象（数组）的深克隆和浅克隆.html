@@ -1,81 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>5.对象（数组）的深克隆和浅克隆</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>5.对象（数组）的深克隆和浅克隆</title>
+</head>
 
-	<body>
-		<script type="text/javascript">
-			let arr = [10, [100, 200], {
-				x: 10,
-				y: 20
-			}];
+<body id="elementId">
+	<script type="text/javascript">
+		let arr = [10, [100, 200], {
+			x: 10,
+			y: 20
+		}];
 
-			let obj = {
-				a: 100,
-				b: [10, 20, 30],
-				c: {
-					x: 10
-				},
-				d: /^\d+$/
-			};
+		let obj = {
+			a: 100,
+			b: [10, 20, 30],
+			c: {
+				x: 10
+			},
+			d: /^\d+$/
+		};
 
-			// let obj2 = {}
+		
 
-			// // 浅克隆
-			// // 只是把第一级克隆了，操作第二级时会对原数组造成影响，例如克隆后把obj2.c.x修改，obj.c.x也会被修改
-			// for (let key in obj) {
-			// 	// hasOwnProperty判断是否为私有属性，私有属性返回true
-			// 	if (!obj.hasOwnProperty(key)) break
-			// 	obj2[key] = obj[key]
-			// }
-			// console.log(obj, obj2)
+		// let obj2 = {}
 
-			// // 使用ES6的展开运算符进行赋值，也是浅克隆
-			// let obj2 = {
-			// 	...obj
-			// }
+		// // 浅克隆
+		// // 只是把第一级克隆了，操作第二级时会对原数组造成影响，例如克隆后把obj2.c.x修改，obj.c.x也会被修改
+		// for (let key in obj) {
+		// 	// hasOwnProperty判断是否为私有属性，私有属性返回true
+		// 	if (!obj.hasOwnProperty(key)) break
+		// 	obj2[key] = obj[key]
+		// }
+		// console.log(obj, obj2)
 
-			// JSON方法进行深克隆
-			// 先把obj变成JSON字符串，再把字符串转为对象赋值
-			// 优点：方便简单，缺点：遇到正则，函数，日期格式的数据时会把正则转为空对象，函数元素会被删除，日期格式会被时间字符串
-			// let obj2 = JSON.parse(JSON.stringify(obj))
+		// // 使用ES6的展开运算符进行赋值，也是浅克隆
+		// let obj2 = {
+		// 	...obj
+		// }
 
-			var d = new Date()
-			console.log(typeof(/^\d+$/)) //输出：object
-			console.log(typeof(d)) //输出：object
+		// JSON方法进行深克隆
+		// 先把obj变成JSON字符串，再把字符串转为对象赋值
+		// 优点：方便简单，缺点：遇到正则，函数，日期格式的数据时会把正则转为空对象，函数元素会被删除，日期格式会被时间字符串
+		// let obj2 = JSON.parse(JSON.stringify(obj))
+
+		var d = new Date()
+		console.log(typeof (/^\d+$/)) //输出：object
+		console.log(typeof (d)) //输出：object
 
 
-			// 深克隆
-			function deepClone(obj) {
-				// 过滤特殊类型
-				if (obj === null) return null;
-				if (typeof obj !== 'object') return obj;
-				// typeof无法检测正则和日期对象类型
-				if (obj instanceof RegExp) return new RegExp(obj);
-				if (obj instanceof Date) return new Date(obj);
-				// 防止传入的是一个类的实例，
-				// 对象的constructor为自身对象，
-				// 实例的constructor为自身类的实例，
-				// 使用obj.constructor是为了防止传入实例中的构造函数已有初始化，并且克隆的结果和之前保持相同的所属类
-				let cloneObj = new obj.constructor;
-				for (let key in obj) {
-					if (obj.hasOwnProperty(key)) {
-						cloneObj[key] = deepClone(obj[key]);
-					}
+
+		// 深克隆
+		function deepClone(obj) {
+			// 过滤特殊类型
+			if (obj === null) return null;
+			if (typeof obj !== 'object') return obj;
+			// typeof无法检测正则和日期对象类型
+			if (obj instanceof RegExp) return new RegExp(obj);
+			if (obj instanceof Date) return new Date(obj);
+			// 防止传入的是一个类的实例，
+			// 对象的constructor为自身对象，
+			// 实例的constructor为自身类的实例，
+			// 使用obj.constructor是为了防止传入实例中的构造函数已有初始化，并且克隆的结果和之前保持相同的所属类
+			let cloneObj = new obj.constructor;
+			for (let key in obj) {
+				if (obj.hasOwnProperty(key)) {
+					cloneObj[key] = deepClone(obj[key]);
 				}
-				return cloneObj;
 			}
+			return cloneObj;
+		}
 
-			let obj2 = deepClone(obj)
-			console.log(obj, obj2)
-			console.log(obj === obj2)
-			console.log(obj.c === obj2.c)
-		</script>
-	</body>
+		let obj2 = deepClone(arr)
+		console.log(obj2)
+		// console.log(obj, obj2)
+		// console.log(obj === obj2)
+		// console.log(obj.c === obj2.c)
+
+
+	</script>
+</body>
 
 </html>

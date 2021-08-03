@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>43.instanceof运算符，原型和原型链</title>
+</head>
+
+<body>
+	<script type="text/javascript">
+		/*
+			原型关系：
+			1. 每个class都有显式原型prototype
+			2. 每个实例都有隐式原型__proto__
+			3. 实例的__proto__指向对应class的prototype
+
+			基于原型的执行规则：
+			1. 先获取实例自身属性或方法执行
+			2. 如果没有，就去__proto__中去找
+
+			class是ES6的语法规范，由ECMA委员会发布
+			ECMA只规定语法规范，即我们代码的书写规范，不规定如何实现
+			怎样实现取决于JS引擎，而不同引擎的实现原理是不一样的，现在主流都是使用V8引擎
+			我们所学的JS原理都是基于V8引擎的JS实现原理
+		*/
+
+		class People {
+			constructor(name) {
+				this.name = name
+			}
+			sayHi() {
+				console.log(`我的名字是${this.name}`)
+			}
+		}
+
+		class Student extends People {
+			constructor(name, number) {
+				super(name)
+				this.number = number
+			}
+			study() {
+				console.log(`学生${this.name}，学号是${this.number}，他学习很努力`)
+			}
+		}
+
+		class Teacher extends People {
+			constructor(name, major) {
+				super(name)
+				this.major = major
+			}
+			teach() {
+				console.log(`${this.name}老师是教${this.major}的`)
+			}
+		}
+
+		let zhangsan = new Student('张三', 100)
+		let lisi = new Teacher('李四', '语文')
+		zhangsan.sayHi()
+		lisi.sayHi()
+		zhangsan.study()
+		lisi.teach()
+
+		// instanceof用于判断引用类型变量是否属于后面类构建出来的或者是否父类，换句话说，就是是否能在前者的原型链上找到后者的显式原型
+		console.log(zhangsan instanceof Student) //true
+		console.log(zhangsan instanceof People) //true，Student继承于People，因此People也参与了zhangsan的构建
+		console.log(zhangsan instanceof Object) //true，Object属于所有类的父类
+
+		console.log([] instanceof Array) //true
+		console.log([] instanceof Object) //true，Object属于Array的父类
+
+		console.log({} instanceof Object) //true
+
+		// class 实际上是函数
+		console.log(typeof (People)) //function
+		console.log(typeof (Student)) //function
+
+		// 隐式原型和显式原型
+		console.log(zhangsan.__proto__) //隐式原型
+		console.log(Student.prototype) //显式原型
+		// console.log(Student.__proto__)
+		// console.log(People.__proto__)
+		console.log(zhangsan.__proto__ === Student.prototype)
+
+		console.log(Student.prototype.__proto__)
+		console.log(People.prototype)
+		console.log(People.prototype === Student.prototype.__proto__)
+
+
+	</script>
+</body>
+
+</html>

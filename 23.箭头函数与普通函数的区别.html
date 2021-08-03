@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>23.箭头函数与普通函数的区别</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>23.箭头函数与普通函数的区别</title>
+</head>
 
-	<body>
-		<script type="text/javascript">
-			/*
-				箭头函数和普通函数的区别：
-				1. 箭头函数语法上比普通函数更加简洁（ES6中函数都可以使用形参赋默认值和展开运算符）
-				2. 箭头函数没有自己的this，并且不能使用call改变，this永远指向所属执行上下文的父级
-				3. 箭头函数中没有arguments（类数组），只能基于...arg获取传递的参数集合（数组）
-				4. 普通函数能被当做类，被new变成构造函数创造出实例，但是箭头函数不能被New执行，
-				   因为箭头函数没有自己的this，更重要的是，箭头函数没有自己的prototype就没有自己的构造函数，所以不能被new执行
-			*/
+<body>
+	<script type="text/javascript">
+		/*
+			箭头函数和普通函数的区别：
+			1. 箭头函数语法上比普通函数更加简洁（ES6中函数都可以使用形参赋默认值和展开运算符）
+			2. 箭头函数没有自己的this，并且不能使用call改变，this永远指向所属执行上下文的父级
+			3. 箭头函数中没有arguments（类数组），只能基于...arg获取传递的参数集合（数组）
+			4. 普通函数能被当做类，被new变成构造函数创造出实例，但是箭头函数不能被New执行，
+			   因为箭头函数没有自己的this，更重要的是，箭头函数没有自己的prototype就没有自己的构造函数，所以不能被new执行
+		*/
 
-			// document.body.onclick = () => {
-			// 	// this:window  不是当前操作的body了
-			// }
+		// document.body.onclick = () => {
+		// 	// 这里的this是window  不是当前操作的body了
+		// }
 
 
-			// document.body.onclick = function() {
-			// 	// this:body  
-			// 	// 回调函数中的this一般都是window
-			// 	arr.sort(function(a, b) {
-			// 		// this:window
-			// 		return a - b
-			// 	})
-			// }
+		// document.body.onclick = function() {
+		// 	// 这里的this是body  
+		// 	// 回调函数中的this一般都是window
+		// 	arr.sort(function(a, b) {
+		// 		// 这里的this是window
+		// 		return a - b
+		// 	})
+		// }
 
-			let fn = (...arg) => {
-				// console.log(arguments) //报错
-				console.arg
-			}
+		// let fn = (...arg) => {
+		// 	// console.log(arguments) //报错
+		// 	console.log(arg)
+		// }
 
-			fn(10, 20, 30)
-		</script>
-	</body>
+		let fn = function() {
+			console.log(arguments) //普通函数可以通过arguments直接获取数组形式传参，如[10,20,30]
+			// console.log(arg)
+		}
+
+		fn(10, 20, 30)
+	</script>
+</body>
+
 </html>

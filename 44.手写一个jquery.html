@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>44.手写一个jquery</title>
+</head>
+
+<body>
+
+	<p>一段文字 1</p>
+	<p>一段文字 2</p>
+	<p>一段文字 3</p>
+	<p>一段文字 4</p>
+	<p>一段文字 5</p>
+	<script type="text/javascript">
+		// 简易jquery
+		class jQuery {
+			constructor(selector) {
+				const result = document.querySelectorAll(selector)
+				const length = result.length
+				for (let i = 0; i < length; i++) {
+					this[i] = result[i]
+				}
+				this.length = length
+				this.selector = selector
+			}
+			get(index) {
+				return this[index]
+			}
+			each(fn) {
+				for (let i = 0; i < this.length; i++) {
+					const elem = this[i]
+					fn(elem)
+				}
+			}
+			on(type, fn) {
+				return this.each(elem => {
+					elem.addEventListener(type, fn, false)
+				})
+			}
+		}
+		// 简易jquery插件机制
+		jQuery.prototype.dialog = function (info) {
+			alert(info)
+		}
+
+		// 复写机制
+		class myJQuery extends jQuery {
+			constructor(selector) {
+				super(selector)
+			}
+			// 扩展自己的方法，重名覆盖父类方法
+			addClass(className) {
+				alert('add a ' + className)
+			}
+			style(data) {
+				alert('add a style' + data)
+			}
+		}
+
+		const $p = new jQuery('p')
+		$p.get(1)
+		$p.each((elem) => {
+			console.log(elem.nodeName)
+		})
+		$p.on('click', () => {
+			alert('click')
+		})
+		console.log($p)
+	</script>
+</body>
+
+</html>

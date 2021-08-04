@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>47.手写bind</title>
+</head>
+
+<body>
+	<script type="text/javascript">
+		function fn1(a, b, c) {
+			console.log('this：', this)
+			console.log(a, b, c)
+			return 'this is fn1'
+		}
+
+		// const fn2 = fn1.bind({ x: 100 }, 10, 20, 30)
+		// console.log(fn2())
+
+
+
+		Function.prototype.myBind = function () {
+			// 将参数解析为数组
+			const args = Array.prototype.slice.call(arguments) // 等于ES6的 Array.from(arguments) ，从参数中获取数组
+			// const args = Array.from(arguments)
+			// 获取this（取出数组第一项，数组剩余的就是传递参数）
+			const t = args.shift() // shift取出数组第一项，原数组被改变
+			const self = this // 当前函数
+			// 返回一个函数
+			return function () {
+				return self.apply(t, args)
+			}
+		}
+		const fn2 = fn1.myBind({ x: 100 }, 10, 20, 30)
+		console.log(fn2())
+	</script>
+</body>
+
+</html>

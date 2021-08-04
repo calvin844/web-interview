@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>46.关于this的不同场景，如何取值？</title>
+</head>
+
+<body>
+	<script type="text/javascript">
+		/*
+			this取什么值取决于函数执行时的时候确认的，而不是函数定义的时候确认，除了箭头函数会去执行作用域的上级作用域的this
+
+			考查点：
+			1. 作为普通函数
+			2. 使用call,apply,bind
+			3. 作为对象方法被调用
+			4. 在class方法中调用
+			5. 箭头函数
+		*/
+
+		//作为普通函数
+		function fn1() {
+			console.log(this)
+		}
+		fn1() //window
+
+		// 使用call,apply,bind改变this
+		fn1.call({ x: 100 }) //{x:100}
+		const fn2 = fn1.bind({ x: 200 })
+		fn2() //{x:200}
+
+		// 作为对象方法被调用
+		const zhangsan = {
+			name: '张三',
+			sayHi() {
+				console.log(this) //this 即当前对象
+			},
+			wait() {
+				setTimeout(function () {
+					console.log(this) //this 即window，函数的执行是setTimeout触发的执行，不是zhangsan.function来执行
+				}, 1000)
+			}
+		}
+
+		// 箭头函数
+		const lisi = {
+			name: '李四',
+			sayHi() {
+				console.log(this) //this 即当前对象
+			},
+			waitAgain() {
+				setTimeout(() => {
+					/*
+						this 即当前对象，箭头函数的this永远取它上级作用域的this，
+					 	这里触发时作用域为setTimeout，setTimeout的上级作用域为waitAgain，waitAgain中的this为当前对象
+					*/
+					console.log(this)
+				}, 1000)
+			}
+		}
+
+		// 在class方法中调用
+		class People {
+			constructor(name) {
+				this.name = name
+				this.age = 20
+			}
+			sayHi() {
+				console.log(this)
+			}
+		}
+		const zhangsan = new People('张三')
+		zhangsan.sayHi() //this 为zhangsan
+	</script>
+</body>
+
+</html>

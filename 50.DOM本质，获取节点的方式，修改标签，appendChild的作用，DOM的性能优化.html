@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>50.DOM本质，获取节点的方式，修改标签，appendChild的作用，DOM的性能优化</title>
+</head>
+
+<body>
+	<script type="text/javascript">
+		/*
+			DOM本质：
+			DOM的本质是浏览器获取HTML文档并解析以后说形成的一个树形结构
+		*/
+
+		// 获取DOM节点的形式
+		const div1 = document.getElementById('div1') //通过ID获取，是一个元素
+		const divList = document.getElementsByTagName('div')//通过标签名获取，是一个集合
+		const containerList = document.getElementsByClassName('.container') //通过样式名获取，是一个集合
+		const PList = document.querySelectorAll('p') //通过指定CSS选择器获取，是一个集合
+
+		// property（通过JS改变页面渲染形式的方式，这个方式中DOM节点的属性就叫property），一般用于操作标签的JS属性，不会体现到html结构中
+		const pList = document.querySectorAll('p')
+		const p1 = pList[0]
+		console.log(p1.style.width) //获取样式
+		p1.style.width = '100px'	//修改样式
+		console.log(p1.className) //获取class
+		p1.className = 'p1'	//修改class
+		console.log(p1.nodeName)// 获取nodeName
+		console.log(p1.nodeType)// 获取nodeType
+		// 操作完成后，<p></p>在html结构上没有变化
+
+		// attribute，一般用于操作标签的节点属性，会改变html结构
+		p1.getAttribute('data-name')
+		p1.setAttribute('data-name', 'imooc')
+		// 操作完成后，<p></p>改为<p data-name='imooc'></p>，html结构变化
+
+		// 以上两者都有可能引起DOM的重新渲染，property性能更高
+
+
+		// appendChild的作用
+		const div1 = document.getElementById('div1')// 添加新节点
+		const p1 = document.createElement('p')
+		p1.innerHTML = 'this is p1'
+		div1.appendChild(p1) // 添加新创建的元素
+		const p2 = document.getElementById('p2')
+		div1.appendChild(p2) // 移动已有节点，注意是移动
+
+		// 获取子元素列表，包括标签体内容也是子元素之一
+		const div1 = document.getElementById('div1')
+		const child = div1.childNodes
+
+		// 获取父元素
+		const div1 = document.getElementById('div1')
+		const parent = div1.parentNode
+
+		// 删除节点
+		const div1 = document.getElementById('div1')
+		const child = div1.childNodes
+		div1.removeChild(child[0])
+
+		/* 
+			关于DOM的性能优化
+			1. DOM的操作是比较耗费内存的，频繁操作可能会导致卡顿问题，避免频繁的DOM操作
+			2. 对DOM查询做缓存
+			3. 将频繁操作改为一次性操作
+		*/
+
+		// DOM查询做缓存
+		// 不缓存DOM查询结果
+		for (let i = 0; i < document.getElementsByTagName('p').length; i++) {
+			// 每次循环都会计算length，频繁进行DOM查询
+		}
+		// 缓存DOM查询结果
+		const pList = document.getElementsByTagName('p')
+		const length = pList.length
+		for (let i = 0; i < length; i++) {
+			// 缓存 length，只进行一次DOM查询
+		}
+
+		// 将频繁操作改为一次性操作
+		// 频繁插入节点
+		const listNode = document.getElementById('list')
+		for (let x = 0; x < 10; x++) {
+			const li = document.createElement('li')
+			li.innerHTML = 'List item ' + x
+			listNode.appendChild(li)// 执行插入
+		}
+		// 建立Fragment集合再一次性插入节点
+		const listNode = document.getElementById('list')
+		const frag = document.createDocumentFragment() //创建一个文档片段，此时还没有插入到 DOM 树中
+		for (let x = 0; x < 10; x++) {
+			const li = document.createElement('li')
+			li.innerHTML = 'List item ' + x
+			frag.appendChild(li)// 先插入到文档片段中，不会对DOM造成影响
+		}
+		listNode.appendChild(frag) //都完成之后再统一插入到 DOM 树中
+
+	</script>
+</body>
+
+</html>

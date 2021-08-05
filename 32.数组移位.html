@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>32.旋转数组</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			/*
+				旋转数组
+				给定一个数组，将数组中的元素向右移动K个位置，其中K是非负数
+				输入：[1,2,3,4,5,6,7] 和 K=3
+				输出：[5,6,7,1,2,3,4]
+				解释：
+				向右旋转1步：[7,1,2,3,4,5,6]
+				向右旋转2步：[6,7,1,2,3,4,5]
+				向右旋转3步：[5,6,7,1,2,3,4]
+				
+				
+				输入：[-1,-100,3,99] 和 K=2
+				输出：[3,99,-1,-100]
+				解释：
+				向右旋转1步：[99,-1,-100,3]
+				向右旋转2步：[3，99，-1，-100]
+			*/
+			var arr = [1, 2, 3, 4, 5, 6, 7]
+			var newArr = []
+
+			function rotate(k) {
+				// 参数处理
+				if (k < 0 || k === 0 || k === this.length) return this
+				if (k > this.length) k = k % this.length
+				// 旋转数组
+				// 截取数组后K位放前面，剩下的拼接起来
+				// return this.slice(-k).concat(this.slice(0, this.length - k))
+
+				// splice方法截取数组后K位放前面，剩下的拼接起来
+				// return [...this.splice(this.length - k), ...this]
+
+				// 循环k次，每次把获取最后一项并放到数组前面
+				// for (var i = 0; i < k; i++) {
+				// 	this.unshift(this.pop())
+				// }
+				// 利用数组对象优化
+				new Array(k).fill('').forEach(() => {
+					this.unshift(this.pop())
+				})
+				return this
+			}
+			Array.prototype.rotate = rotate
+
+			console.log(arr.rotate(3))
+		</script>
+	</body>
+</html>

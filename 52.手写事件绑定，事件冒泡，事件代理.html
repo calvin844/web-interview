@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>52.手写事件绑定，事件冒泡，事件代理</title>
+</head>
+
+<body>
+	<!-- 事件绑定 -->
+	<button id="btn1">点我</button>
+	<a id="link1" href="#">点我</a>
+
+	<!-- 事件冒泡 -->
+	<div id="div1">
+		<p id="p1">激活</p>
+		<p id="p2">取消</p>
+		<p id="p3">取消</p>
+		<p id="p4">取消</p>
+	</div>
+	<div id="div2">
+		<p id="p5">取消</p>
+		<p id="p6">取消</p>
+	</div>
+
+	<!-- 事件代理 -->
+	<div id="div3">
+		<a href="#">a1</a>
+		<a href="#">a2</a>
+		<a href="#">a3</a>
+		<a href="#">a4</a>
+		<button>增加一个a</button>
+	</div>
+	<script type="text/javascript">
+		/**/
+
+		// 通用的绑定函数
+		// function bindEvent(elem, type, fn) {
+		// 	elem.addEventListener(type, fn)
+		// }
+
+		function bindEvent(elem, type, selector, fn) {
+			if (fn == null) {
+				fn = selector
+				selector = null
+			}
+			elem.addEventListener(type, event => {
+				const target = event.target
+				if (selector) {
+					// 代理绑定
+					if (target.matches(selector)) {
+						fn.call(target, event)
+					}
+				} else {
+					// 普通绑定
+					fn.call(target, event)
+				}
+			})
+		}
+
+		// // 事件绑定
+		// const btn = document.getElementById('btn1')
+		// btn.addEventListener('click', event => {
+		// 	alert(this.innerHTML)
+		// })
+
+		// const a = document.getElementById('link1')
+		// bindEvent(a, 'click', function (e) {
+		// 	e.preventDefault() // 阻止默认行为
+		// 	alert(this.innerHTML)
+		// })
+
+		// 事件冒泡
+		// 事件冒泡是基于DOM树形结构，事件会顺着触发元素往上冒泡
+		const p1 = document.getElementById('p1')
+		bindEvent(p1, 'click', e => {
+			e.stopPropagation() //阻止事件冒泡
+			alert(this.innerHTML)
+		})
+		// const body = document.body
+		// bindEvent(body, 'click', e => {
+		// 	alert('取消')
+		// })
+
+
+		// 事件代理，由于子元素过多，可以把事件绑定到父级元素上，基于事件冒泡，通过点击事件再获取被点击的子元素，避免每个子元素都需要写绑定事件
+		// 优点：代码简洁，减少浏览器内存占用
+		// 适用场景：子元素个数不确定，如瀑布流
+		// const div3 = document.getElementById('div3')
+		// bindEvent(div3, 'click', 'a', function (e) {
+		// 	e.preventDefault() // 阻止默认行为
+		// 	alert(this.innerHTML)
+		// })
+		// div3.addEventListener('click', e => {
+		// 	e.preventDefault() // 阻止默认行为
+		// 	const target = e.target
+		// 	console.log(target.nodeName)
+		// 	if (target.nodeName == 'A') {
+		// 		alert(target.innerHTML)
+		// 	}
+		// })
+
+
+	</script>
+</body>
+
+</html>

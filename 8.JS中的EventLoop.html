@@ -1,47 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>8.JS中的EventLoop</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>8.JS中的EventLoop</title>
+</head>
 
-	<body>
-		<script type="text/javascript">
-			// 栈内存内执行完后，寻找任务队列中的任务放回到栈内存中执行，执行完又找任务队列中任务放回栈内存执行，这个过程就叫EventLoop，事件循环
-			// 浏览器是多线程，但是Js是单线程的，浏览器只给了JS一个线程，那就是栈内存
-			// EventQueue，任务队列，又分微任务和宏任务，先执行栈内，然后微任务，最后宏任务
-			async function async1() {
-				console.log('async1 start')//2
-				// await 创建的任务为微任务，await用于创建异步任务等待有结果再执行下面的代码
-				await async2();
-				console.log('async1 end')//6
-			}
-			async function async2() {
-				console.log('async2')//3
-			}
-			
-			console.log('script start') //1
+<body>
+	<script type="text/javascript">
+		/*
+		   什么是宏任务？什么是微任务？
+		   微任务是指一个需要异步执行的函数，执行时机是在主函数执行结束之后，当前宏任务结束之前。
+		   宏任务的时间粒度比较大，执行的时间间隔是不能精确控制的，对一些高实时性的需求就不太符合
 
-			// 定时器任务、事件绑定和ajax为宏任务
-			setTimeout(function() {
-				console.log('setTimeout')//8
-			}, 0)
+		   常见的微任务：
+		   1. Promise.then
+		   2. MutaionObserver
+		   3. Object.observe（已废弃）
+		   4. process.nextTick（Node.js）
+		   5. async await后的任务
 
-			async1();
+		   常见的宏任务：
+		   1. script（可以理解为外层同步代码）
+		   2. setTimeout/setInterval
+		   3. UI rendering/UI事件
+		   4. postMessage,MessageChannel
+		   5. setImmediate,I/O （Node.js）
+		   6. Promise
 
-			// new Promise是一个栈内存同步任务，返回的resolve/reject为微任务
-			new Promise(function(resolve) {
-				console.log('promise1')//4
-				resolve()
-			}).then(function() {
-				console.log('promise2')//7
-			})
+		   执行流程（EventLoop）：
+		   宏任务（script）-> 微任务（过程中有新的微任务会直接加入任务队列）-> 宏任务（setTimeout等）
+	   */
 
-			console.log('script end')//5
-		</script>
-	</body>
+		// 栈内存内执行完后，寻找任务队列中的任务放回到栈内存中执行，执行完又找任务队列中任务放回栈内存执行，这个过程就叫EventLoop，事件循环
+		// 浏览器是多线程，但是Js是单线程的，浏览器只给了JS一个线程，那就是栈内存
+		// EventQueue，任务队列，又分微任务和宏任务，先执行栈内，然后微任务，最后宏任务
+		async function async1() {
+			console.log('async1 start')//2
+			// await 创建的任务为微任务，await用于创建异步任务等待有结果再执行下面的代码
+			await async2();
+			console.log('async1 end')//6
+		}
+		async function async2() {
+			console.log('async2')//3
+		}
+
+		console.log('script start') //1
+
+		// 定时器任务、事件绑定和ajax为宏任务
+		setTimeout(function () {
+			console.log('setTimeout')//8
+		}, 0)
+
+		async1(); //执行函数
+
+		// new Promise是一个栈内存同步任务，返回的resolve/reject为微任务
+		new Promise(function (resolve) {
+			console.log('promise1')//4
+			resolve()
+		}).then(function () {
+			console.log('promise2')//7
+		})
+
+		console.log('script end')//5
+	</script>
+</body>
 
 </html>

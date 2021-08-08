@@ -81,7 +81,7 @@
 		// let reg = /(\d+@)\1 */g
 		// ary = []
 		// str.replace(reg, (n, m) => {
-		// 	m = Number(m.slice(0, m.length - 1))
+		// 	m = Number(n.slice(0, n.length - 1))
 		// 	// ary.push(m)
 		// 	// parseFloat只获取字符串的数字部分
 		// 	ary.push(parseFloat(m))
@@ -133,6 +133,10 @@
 		// 			// 如果当前新元素比已有元素大，就把A放到B后面
 		// 			if (A > B) { 
 		// 				handle.splice(j + 1, 0, A)
+		// 				break;
+		// 			}else{
+		//				// 如果当前新元素比已有元素小，就把A放到B前面
+		// 				handle.splice(j, 0, A)
 		// 				break;
 		// 			}
 		// 			// 已经比到容器内第一项，我们把新元素放到容器的前面

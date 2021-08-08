@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.手写代码实现一个Promise.all方法</title>
+</head>
+
+<body>
+    <script>
+        let p1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(1111);
+                // reject('err')
+            }, 1000)
+        })
+
+        let p2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(2222);
+                // reject('err')
+            }, 2000)
+        })
+        // 必须多个promise结果都是resolve的情况下才能收集，如果有一个是reject都没法收集
+        // Promise.all([p1, p2]).then(res => {
+        //     console.log(res)
+        // })
+
+        // 手写实现Promise.all原理
+        function myPromiseAll(lists) {
+            return new Promise((resolve, reject) => {
+                let resArr = []
+                let num = 0
+                lists.forEach(item => {
+                    item.then(res => {
+                        resArr.push(res)
+                        num++;
+                        if (num === lists.length) {
+                            resolve(resArr)
+                        }
+                    })
+                });
+            })
+        }
+
+        myPromiseAll([p1, p2]).then(res => {
+            console.log(res)
+        })
+    </script>
+
+</body>
+
+</html>

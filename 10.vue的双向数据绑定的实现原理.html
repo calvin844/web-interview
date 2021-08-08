@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>10.vue的双向数据绑定的实现原理</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>10.vue的双向数据绑定的实现原理</title>
+</head>
 
-	<body>
-		<!-- 
+<body>
+	<!-- 
 		答题技巧： 我们项目都是用2.0，用熟悉之后我看了它的底层实现原理，发现它就是用ES5新增加的Object.defineProperty实现的，
 		发现3.0发布后，我在github下载了源码看，有在掘金上看大家对3.0的评价，我觉得3.0是一个跨时代的意义，数据绑定使用了proxy来做的，还提供了XXX，相对于2.0来说有那些好处
 		-->
-		<!-- ES5： Object.defineProperty -->
-		<!-- 姓名：<span id="spanName"></span>
+	<!-- ES5： Object.defineProperty -->
+	<!-- 姓名：<span id="spanName"></span>
 		<br />
 		<input type="text" id="inpName" />
 		<script type="text/javascript">
@@ -53,34 +53,36 @@
 			*/
 		</script> -->
 
-		<!-- ES6： Proxy -->
-		姓名：<span id="spanName"></span>
-		<br />
-		<input type="text" id="inpName" />
-		<script type="text/javascript">
-			let obj = {}
-			obj = new Proxy(obj, {
-				// target：监听的对象；prop：监听的属性
-				get(target, prop) {
-					console.log('A')
-					return target[prop]
-				},
-				// target：监听的对象；prop：监听的属性；val：设置的新值
-				set(target, prop, val) {
-					console.log('B')
-					target[prop] = val
-					observer()
-				}
-			})
-			
-			function observer() {
-				spanName.innerHTML = newObj.name
-				inpName.value = newObj.name
+	<!-- ES6： Proxy -->
+	姓名：<span id="spanName"></span>
+	<br />
+	编辑姓名：<input type="text" id="inpName" />
+
+
+	<script type="text/javascript">
+		let obj = {}
+		obj = new Proxy(obj, {
+			// target：监听的对象；prop：监听的属性
+			get(target, prop) {
+				console.log('A')
+				return target[prop]
+			},
+			// target：监听的对象；prop：监听的属性；val：设置的新值
+			set(target, prop, val) {
+				console.log('B')
+				target[prop] = val
+				observer()
 			}
-			inpName.oninput = function() {
-				obj.name = this.value
-			}
-		</script>
-	</body>
+		})
+
+		function observer() {
+			spanName.innerHTML = obj.name
+			inpName.value = obj.name
+		}
+		inpName.oninput = function () {
+			obj.name = this.value
+		}
+	</script>
+</body>
 
 </html>

@@ -5,63 +5,18 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>9.this指向与变量比较</title>
+	<title>9.变量比较</title>
 </head>
 
 <body>
 	<script type="text/javascript">
-		// 1
-		// function A() {
-		// 	alert(1)
-		// }
-
-		// function Func() {
-		// 	A = function() {
-		// 		alert(2)
-		// 	};
-		// 	console.log(this)
-		// 	return this
-		// }
-		// Func.A = A
-		// Func.prototype = {
-		// 	A: () => {
-		// 		alert(3)
-		// 	}
-		// }
-		// A() //1
-		// Func.A() //1
-		// Func().A() //2
-		// new Func.A() //1
-		// new Func().A() //3
-		// new new Func().A() //箭头函数由于没有原型链的，没有原型链就表示没有构造函数，所以不能被new调用，普通函数可以通过new方法调用
-
-		// var x = 2;
-		// var y = {
-		// 	x: 3,
-		// 	z: (function (x) {
-		// 		// 自执行函数的this为window
-		// 		// 形参取值为window下的x
-		// 		this.x *= x; // x *= y，相当于x = x * y
-		// 		x += 2; // x += y，相当于x = x + Fy
-		// 		return function (n) {
-		// 			this.x *= n
-		// 			console.log('return', this.x)
-		// 			x += 3
-		// 			console.log('return', x)
-		// 		}
-		// 	})(x)
-		// }
-		// var m = y.z
-		// m(4)
-		// y.z(5)
-		// console.log(x, y.x)
-
 
 			// ==时会默认转换类型再比较，===时是直接值比较
 			// 1. 对象==字符串：把对象toString转为字符串
 			// 2. null==undefined：相等的，但是和其他值比较都不相等
 			// 3. NaN==NaN：不相等，NaN和谁都不相等，包括它自己
 			// 4. 其他的都是转为数字："1" == true "1"转为数字1，true转为数字1，因此它们相等
+			// 5. 同类型的比较为直接值比较
 
 			// a为什么值的时候，下面代码成立
 			// 第一种：a和数字比较时会调用toString方法，我们自定义toString方法，由于3次相等，所以toString就会调用3次，让它每次调用都输出不同的值

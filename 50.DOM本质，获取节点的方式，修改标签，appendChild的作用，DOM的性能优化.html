@@ -36,11 +36,10 @@
 		p1.getAttribute('data-name')
 		p1.setAttribute('data-name', 'imooc')
 		// 操作完成后，<p></p>改为<p data-name='imooc'></p>，html结构变化
-
 		// 以上两者都有可能引起DOM的重新渲染，property性能更高
 
 
-		// appendChild的作用
+		// appendChild的作用：添加节点和移动节点
 		const div1 = document.getElementById('div1')// 添加新节点
 		const p1 = document.createElement('p')
 		p1.innerHTML = 'this is p1'

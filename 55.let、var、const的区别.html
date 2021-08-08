@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.let、var、const的区别</title>
+</head>
+
+<body>
+    <script>
+        // var
+        // 没有块级作用域，只有函数作用域，支持变量提升，定义的变量是挂在window上
+        // var a = 10，实际流程：var a; a = 10；var会拆分先定义变量，再给变量赋值，
+        // 因此，在变量赋值前console.log(a)为undefined，而不是直接报错a is not defined
+        // console.log(a)
+        // var a = 10;
+        // console.log(window.a)
+
+
+        // let
+        // 有块级作用域，不支持变量提升，不允许重复声明，定义变量时会出现临时死区，不能通过window.a获取
+        // {
+        //     let a = 10
+        //     console.log(a)
+        // }
+        // console.log(a)
+        //  let a = 10
+        // let a = 20 //报错a已被赋值
+        // console.log(window.a)
+
+        // const 
+        // 有块级作用域，不支持变量提升，不允许重复声明，会出现临时死区，用于定义常量，常量不允许重新赋值
+        // const a = 10
+        // const a = 20
+        // a = 30
+    </script>
+
+</body>
+
+</html>

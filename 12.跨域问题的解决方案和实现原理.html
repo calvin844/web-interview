@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>12.跨域问题的解决方案和实现原理</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>12.跨域问题的解决方案和实现原理</title>
+</head>
 
-	<body>
-		<!-- 
+<body>
+	<!-- 
+		浏览器阻止跨域请求的原因是“同源策略”，同源策略主要解决浏览器的安全问题，
+		同源是指协议，域名，端口都相同，其中有一个不同就是非同源：
+		http://www.baidu.com:443  => 协议：http，域名：www.baidu.com，端口：443
+		http://www.baidu.com:3000  => 协议：http，域名：www.baidu.com，端口：3000
+		以上两个地址由于端口不同就造成跨域问题，
+		非同源会造成：
+		1. 无法获取cookie、localStroage、indexedDB
+		2. 无法访问网页中的DOM元素
+		3. 无法发送网络请求
+
+		解决跨域的方式：
+		1. jsonp跨域
+		2. iframe postMessage解决跨域
+		3. 跨域资源共享（CORS）
+		4. nginx反向代理
+		5. nodejs中间件正向代理
+		6. websocket协议跨域
+
+		跨域是浏览器出于安全策略阻止非同源请求，但是每次跨域请求其实都是正常发送的，服务端也会正常返回，
+		只是返回后被浏览器拦截起来了，所以每次跨域请求都会到达服务端
+
+
+
 		浏览器本身的特点
 		浏览器自身ajax发送请求时有同源策略，协议、域名、端口号其中之一不同的不允许访问
+		同源策略：ajax请求时，浏览器要求当前网页和服务端必须同源，以保证安全
+		同源：协议、域名、端口，三者必须一致
+		同源策略仅限于浏览器发送，服务端发送是不受限制的，如搜索爬虫引擎
+		图片的src，JS的src和link的hrel不受同源策略限制
 		
 		1. jsonp
 		script标签是不存在跨域问题的，jsonp就是动态生成一个script标签，把请求地址赋值给script
@@ -21,7 +48,7 @@
 		缺点：只支持get（不安全，有缓存，有长度限制，需要服务器配合拼接字符串）
 		
 		2. iframe（中间的过渡）
-		iframe配合window.name，document.domin，location.hash，post message
+		iframe配合post message
 		缺点：必须主域相同，子域不同才能使用
 				
 		3. CORS跨域资源共享（都在服务器设置）
@@ -34,23 +61,24 @@
 		缺点：需要逐个配置响应源
 		
 		4. 基于http proxy跨域代理
-		
 		5. nginx反向代理
+		6. nodejs中间件正向代理
+		7. websocket协议跨域
 		
 		答题技巧：一开始项目是使用jsonp的，后来发现jsonp局限性很大，只能get，不安全，
 		后来就尝试使用iframe，但是有主域限制，通过学习，我发现CORS和proxy都挺好用的，就引导公司配置使用这2种方式
 		 -->
-		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-		<script type="text/javascript">
-			$.ajax({
-				url: 'http://127.0.0.1:8001/list',
-				method: 'get',
-				dataType: 'jsonp',
-				success: res => {
-					console.log(res)
-				}
-			})
-		</script>
-	</body>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			url: 'http://127.0.0.1:8001/list',
+			method: 'get',
+			dataType: 'jsonp',
+			success: res => {
+				console.log(res)
+			}
+		})
+	</script>
+</body>
 
 </html>

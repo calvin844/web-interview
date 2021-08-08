@@ -16,7 +16,7 @@
 		function fibonacci(n) {
 			if (n <= 1) return 1
 			let arr = [1, 1]
-			// 即将要创建多少个元素
+			// 即将要创建多少个元素，不包括已创建的[1,1]这2个
 			let i = n + 1 - 2
 			while (i > 0) {
 				let a = arr[arr.length - 2],
@@ -24,20 +24,20 @@
 				arr.push(a + b);
 				i--
 			}
-			return arr[arr.length + 1]
+			return arr[arr.length - 1]
 		}
+		console.log(fibonacci(4))  //=>5
 
-
-		function fibonacci(count) {
-			function fn(count, curr = 1, next = 1) {
-				if (count == 0) {
-					return curr;
-				} else {
-					return fn(count - 1, next, curr + next)
-				}
-			}
-			return fn(count)
-		}
+		// function fibonacci(count) {
+		// 	function fn(count, curr = 1, next = 1) {
+		// 		if (count == 0) {
+		// 			return curr;
+		// 		} else {
+		// 			return fn(count - 1, next, curr + next)
+		// 		}
+		// 	}
+		// 	return fn(count)
+		// }
 	</script>
 </body>
 

@@ -19,23 +19,31 @@
 		// 简易jquery
 		class jQuery {
 			constructor(selector) {
+				// 获取指定页面元素
 				const result = document.querySelectorAll(selector)
+				// 存储页面元素个数，避免循环时重复获取个数消耗资源
 				const length = result.length
+				// 循环获取的页面元素
 				for (let i = 0; i < length; i++) {
+					// 把页面元素赋值给实例自身
 					this[i] = result[i]
 				}
+				// 定义实例自身属性记录个数和标签条件
 				this.length = length
 				this.selector = selector
 			}
+			// 定义获取方法
 			get(index) {
 				return this[index]
 			}
+			// 定义遍历方法
 			each(fn) {
 				for (let i = 0; i < this.length; i++) {
 					const elem = this[i]
 					fn(elem)
 				}
 			}
+			// 定义绑定事件方法
 			on(type, fn) {
 				return this.each(elem => {
 					elem.addEventListener(type, fn, false)

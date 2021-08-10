@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>60.WebSocket是怎么实现点对点通信和广播通信的？</title>
+</head>
+
+<body>
+    <script>
+        /*
+            webSocket是一种全双工通信协议，webSocket让服务端和客户端通信变得简单，最大的特点是可以通过服务端
+            主动推送消息到客户端。前端基于nodejs和webSocket实现点对点及广播通信
+
+            广播通信顾名思义就是类似广播一样给多个人进行广播消息，实现广播通信可以使用很多模块，
+            例如socket.io模块：
+                服务器监听socket链接：
+                    io.on('connection',(socket)=>{
+                        console.log('有socket链接')
+                    })
+                    通过监听链接过来的socket对象广播对应的信息：
+                    socket.on("addData",function(data){
+                        // 广播除了自己之外的其他订阅者
+                        socket.broadcast.emit("addInputData",data);
+                    })
+                客户端链接及发送对应的socket请求：
+                    let socket = io.connect("ws://localhost:3000");//链接socket服务器
+                    socket.emit('addData',JSON.stringify(info));//发送socket事件
+            
+            点对点通信顾名思义就是一对一的通信，例如多人实时聊天，可以指定用户来发送消息。点对点通信中需要注意服务端需要记录每个socket客户端的链接，
+            需要将客户端及服务端socket对象关联起来。广播数据的时候，广播指定对象就可以了。如下：
+                服务端记录每一个连接过来的socket对象，且和用户id进行关联：
+                    socket.on('uid',data=>{
+                        usersObj[data]=socket; //通过userObj来记录连接过来的用户
+                    })
+                给指定的socket对象进行广播：
+                    socket.on("user",data=>{
+                        let uid = JSON.parse(data).uid
+                        userObj[uid].emit('content',data);
+                    })
+                客户端监听点对点广播事件：
+                    socket.on("content",function(data){
+                        console.log(data);
+                    })
+
+            总结，webSocket区分广播通信及点对点通信，核心在于区分每一个连接的scoket对象，广播通信需要对于非自身的所有连接的socket对象进行通信。
+            而点对点通信，通过关联用户及socket对象，且保存每一个socket连接，查找指定的socket对象，来达到发送指定socket连接的目的。
+        */ 
+    </script>
+
+</body>
+
+</html>

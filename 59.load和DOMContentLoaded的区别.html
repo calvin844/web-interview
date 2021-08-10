@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>59.load和DOMContentLoaded的区别</title>
+</head>
+
+<body>
+    <script>
+        window.addEventListener('load', function () {
+            // 页面的全部资源加载完才会执行，包括图片、视频等
+        })
+        window.addEventListener('DOMContentLoad', function () {
+            // DOM渲染完即可执行，此时图片、视频还可能没有加载完成
+            // 如果操作不需要操作图片视频等媒体文件，可以在这个阶段就执行
+        })
+    </script>
+
+</body>
+
+</html>

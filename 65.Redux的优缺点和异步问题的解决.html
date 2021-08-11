@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>65.Redux的优缺点和异步问题的解决</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Redux的缺点：修改数据非常麻烦，需要先dispatch到action，action再调用reducer进行计算，触发回调后再去更新数据，就是样板代码（action,reducer）太多，修改数据的链路太长
+            Redux的优点：可以解决跨组件间数据传递的问题，并且修改数据很清晰
+
+            如何使用Redux更好？
+            问题分析：
+            可以通过一些手段减少样板代码，从而简化Redux API
+                1. 使用react-action，在初始化 reducer 和 action 构造器时减少样板代码
+                    减少创建 action 时写一堆固定的方法
+                        ()=>{{type:"XXXX"}} -> createAction('XXX',payload=>payload)
+                    减少创建 reducer 时写一堆固定的方法
+                        switch{} -> handleActions({})
+                2. 使用cli工具，帮助我们自动生成样板代码
+                    使用 yeoman 来帮我们用命令一键创建样板文件和样本代码
+            总结回答：
+            可以通过一些手段减少样板代码，从而简化 Redux API，比如引入 Redux-Actions 来减少编写固定的代码，
+            以及使用 yeoman 来同命令自动生成样板文件以及代码
+
+            为什么 Redux 处理不了异步问题？
+            问题分析：
+            从Redux 代码的原理出发：
+            dispatch(action) //action = {type:'XXX',payload:'XXX'};
+            // reducer 是一个纯函数，无法处理其他类型的数据
+            // 所以dispatch 默认接收的 action 不可以是其他类型，以下代码传递一个函数给dispatch，当进入到switch判断的时候就会报错无法判断
+            dispatch((dispatch)=>{
+                setTimeout(()=>{
+                    dispatch({type:'INCREMENT'})
+                },3000)
+            })
+            总结回答：
+            dispatch 默认只能接收一个Object 类型的 action，因为 reducer 里面要接收 action.type 来处理不同的数据
+
+            如何解决Redux的异步问题？
+            问题分析：
+            1. 使用Redux-thunk中间件，来解决异步 Action 的问题
+            2. 使用Redux-saga中间件，让异步行为成为架构中独立的一层（成为saga）
+            总结回答：
+            1. Redux会额外增加代码的复杂性，使用前需要考虑当前项目的规模和需求
+            2. 可以使用 Redux-Actions 来帮我们减少编写固定的代码，并且使用cli工具来创建样板代码
+            3. Redux 默认无法处理异步 Action 是因为 dispatch 只能接收一个Object 类型的 Action，但是可以通过引入中间件的方式来解决，例如Redux-thunk
+            
+        */
+
+    </script>
+
+</body>
+
+</html>

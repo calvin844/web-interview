@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>64.Redux原理</title>
+    <title>64.Redux如何配合React-Redux将State注入到组件中</title>
 </head>
 
 <body>
@@ -125,7 +125,7 @@
         // const sum = (a)=>{return (b) => a + b}
         // sum(1)(2) -> connect(mapStateToProps,mapDispatchToProps)(Comp)
 
-        // HOC
+        // HOC 高阶组件，参数接受一个组件，返回的是一个新的组件
         const connect = (mapStateToProps = state => state, mapDispatchToProps = {}) =>
             (WrapComponent) => {
                 return class ConnectComponent extends React.Component {
@@ -142,9 +142,63 @@
 
                     componentDidMount() {
                         const { store } = this.context //从Context 中拿到 store 对象
+                        strore.subscribe(() => this.update());//订阅 Redux 的数据更新
+                        this.update()
+                    }
+
+                    // 每次数据有更新的时候，就会调用这个方法
+                    update() {
+                        const { store } = this.context //从 Context 中拿到 store 对象
+                        const stateProps = mapStateToProps(store.getState()) //把store中的全部数据传到组件内部
+                        const dispatchProps = mapDispatchToProps(store.dispatch) //把 store.dispatch 传到组件内部
+                        // 调用 setState 触发组件更新
+                        // 将最新的 state 以及 dispatch 合并到当前组件的 props 上
+                        this.setState({
+                            props: {
+                                ...this.state.props,
+                                ...stateProps,
+                                ...dispatchProps
+                            }
+                        })
+                    }
+
+                    render() {
+                        // 传入 Props
+                        return <WrapComponent {...this.state.props}></WrapComponent>
                     }
                 }
             }
+
+        // const mapStateToProps = state => {
+        //     // 这里注入进来的
+        //     return {
+        //         value:state
+        //     }
+        // }
+
+        // const mapDispatchToProps = dispatch => {
+        //     return {
+        //         onIncrement: () => dispatch({ type: 'INCREMENT' }),
+        //         onDecrement: () => dispatch({ type: 'DECREMENT' })
+        //     }
+        // }
+
+        // 总结：
+        // connect就是一个高阶组件，接受Provider传递过来的store对象，并订阅store中的数据，
+        // 如果store中的数据发生改变，就调用setState触发组件更新
+
+        // 当redux中数据更新的时候，调用内部的update方法，通过传进来的mapStateToProps把当前store中的state传递到组件当中去，
+        // 同时通过mapDispatchToProps方法把处理方法也一起传递到组件中去，最后把本来组件props，store中的state和dispatch一起合并到组件的props中，
+        // 并调用setState方法触发组件更新
+
+        /*
+            答题思路：
+            1. 首先明确让 Redux 与 React 产生关联的是 React-Redux 这个库
+            2. Redux 的原理就是一个发布订阅器，帮我们用一个变量存储所有的 State，并且提供了发布功能来修改数据，以及订阅功能来触发回调
+            3. 而 React-Redux 的作用就是订阅 Store 里数据的更新，它包含两个重要元素，Provider 和 connect 方法
+            4. Provider的作用就是通过 Context API 把 Store 对象注入到 React 组件上去
+            5. 而 connect 方法就是一个高阶组件，在高阶组件里通过订阅 Store 中数据的更新，从而通过调用 setState 方法来触发组件更新
+        */
     </script>
 
 </body>

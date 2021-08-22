@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>72.原型与原型链</title>
+</head>
+
+<body>
+</body>
+<script>
+    /**
+     * 对应名称：
+     * prototype：原型
+     * __proto__: 原型链（链接点）
+     *
+     * 从属关系：
+     * prototype: 函数的一个属性：它就是一个对象{}
+     * __proto__: 对象Object的一个属性：它就是一个对象{}
+     * 对象的__proto__保存着该对象构造函数的prototype
+    */
+    function Test() { }
+    console.log('Test.prototype = ', Test.prototype)
+    console.log('Test.__proto__ = ', Test.__proto__)
+
+    // 创建一个Test函数的对象
+    const test = new Test();
+    console.log('test.__proto__ = ', test.__proto__)
+    console.log('test.prototype = ', test.prototype)
+
+    console.log(test.__proto__ === Test.prototype)
+
+    // Test.prototype也是一个对象，因此，它也有自己的__proto__，指向Object的prototype
+    console.log(Test.prototype.__proto__ === Object.prototype);
+    // Object.prototype作为原型链的顶层，虽然它也有__proto__，但是它为null
+    console.log(Object.prototype.__proto__); //=> null
+
+    // Function Object：函数，对象
+    console.log(Test.__proto__ === Function.prototype);
+
+    // const Test = new Function() => Test这个函数是通过Function这个函数创建出来的
+    console.log(Function.__proto__);
+    console.log(Function.prototype);
+    console.log(Function.__proto__ === Function.prototype); //原型链上真顶层，Function的原型链等于Function的原型
+
+    // const obj = {}
+    // const obj = new Object() // function
+    // 其实，对象都是通过Object这个函数创建出来的
+    console.log(typeof Object);
+    console.log(Object.__proto__ === Function.prototype);
+    console.log(Object.__proto__ === Function.__proto__);
+</script>
+
+
+</html>

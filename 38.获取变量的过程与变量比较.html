@@ -1,73 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>38.获取变量的过程与变量比较</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>38.获取变量的过程与变量比较</title>
+</head>
 
-	<body>
-		<script type="text/javascript">
-			// a等于什么时候下面等式成立
-			// =是赋值，==是比较，===是绝对比较
-			// ==的过程：先转为相同类型再进行比较
-			// ===的过程，不进行类型转换，直接比较
+<body>
+	<script type="text/javascript">
+		// a等于什么时候下面等式成立
+		// =是赋值，==是比较，===是绝对比较
+		// ==的过程：先转为相同类型再进行比较
+		// ===的过程，不进行类型转换，直接比较
 
-			// ==时会默认转换类型再比较，===时是直接值比较
-			// 1. 对象==对象，对象进行比较，比较的是堆内存的地址
-			// 2. null==undefined：相等的，但是和其他值比较都不相等
-			// 3. NaN==NaN：不相等，NaN和谁都不相等，包括它自己
-			// 4. 不同类型的比较都是转为数字再比较："1" == true "1"转为数字1，true转为数字1，因此它们相等
+		// ==时会默认转换类型再比较，===时是直接值比较
+		// 1. 对象==对象，对象进行比较，比较的是堆内存的地址
+		// 2. null==undefined：相等的，但是和其他值比较都不相等
+		// 3. NaN==NaN：不相等，NaN和谁都不相等，包括它自己
+		// 4. 不同类型的比较都是转为数字再比较："1" == true "1"转为数字1，true转为数字1，因此它们相等
 
-			// 对象转数字：先转为字符串，再转为数字
-			// 字符串转数字：只要出现一个非数字字符，结果就是NaN
-			// 布尔转数字：true转为1，false转为0
-			// null转为0
-			// undefined转为NaN
+		// 对象转数字：先转为字符串，再转为数字
+		// 字符串转数字：只要出现一个非数字字符，结果就是NaN
+		// 布尔转数字：true转为1，false转为0
+		// null转为0
+		// undefined转为NaN
 
-			// a为什么值的时候，下面代码成立
-			// 第一种：a和数字比较时会调用toString方法，我们自定义toString方法，由于3次相等，所以toString就会调用3次，让它每次调用都输出不同的值
-			// 延伸：valueOf也行，比较时先调用valueOf获取值，然后在调用toString，因此，我们重写valueOf(){return ++this.i}，也是可以的
-			// var a = {
-			// 	i: 0
-			// 	toString() {
-			// 		return ++this.i
-			// 	}
-			// }
+		// a为什么值的时候，下面代码成立
+		// 第一种：a和数字比较时会调用toString方法，我们自定义toString方法，由于3次相等，所以toString就会调用3次，让它每次调用都输出不同的值
+		// 延伸：valueOf也行，比较时先调用valueOf获取值，然后在调用toString，因此，我们重写valueOf(){return ++this.i}，也是可以的
+		// var a = {
+		// 	i: 0
+		// 	toString() {
+		// 		return ++this.i
+		// 	}
+		// }
 
-			// 第二种：通过数据劫持实现，Object.defineProperty(需要监听的对象，监听的属性，设置get和set方法)
-			// var i = 0 //不能使用a，因为每次get return ++a时又会重新触发get，导致死循环
-			// Object.defineProperty(window, 'a', {
-			// 	get() {
-			// 		return ++i
-			// 	}
-			// })
+		// 第二种：通过数据劫持实现，Object.defineProperty(需要监听的对象，监听的属性，设置get和set方法)
+		// var i = 0 //不能使用a，因为每次get return ++a时又会重新触发get，导致死循环
+		// Object.defineProperty(window, 'a', {
+		// 	get() {
+		// 		return ++i
+		// 	}
+		// })
 
-			// 第三种：数组比较时也是先调用toString，我们把toString方法改为shift，每次把数组第一个元素返回并删除
-			// var a = [1,2,3]
-			// a.toString = a.shift;
-			// if (a == 1 && a == 2 & a == 3) {
-			// 	console.log('条件成立')
-			// }
-			
-			
-			/*
-				ES6中新增加的一些方法
-					String.fromCharCode() 把一个二进制转为字符串
-					Array.from() 把其他值转为数组
-					Array.isArray() 检测是否为数组
-					Object.create() 创建一个空对象，并把对象的原型链指向参数
-					Object.defineProperty() 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回这个对象
-			*/
-			
-			console.log(Number([].toString()))  //=>0
-			console.log(Number([0].toString())) //=>0
-			console.log([0].toString())         //=>0
-			console.log([]==0)                  //=>true
-			console.log([]==[0])                //=>false
-			console.log([]==false)              //=>true
-		</script>
-	</body>
+		// 第三种：数组比较时也是先调用toString，我们把toString方法改为shift，每次把数组第一个元素返回并删除
+		// var a = [1,2,3]
+		// a.toString = a.shift;
+		// if (a == 1 && a == 2 & a == 3) {
+		// 	console.log('条件成立')
+		// }
+
+
+		/*
+			ES6中新增加的一些方法
+				String.fromCharCode() 把一个二进制转为字符串
+				Array.from() 把其他值转为数组
+				Array.isArray() 检测是否为数组
+				Object.create() 创建一个空对象，并把对象的原型链指向参数
+				Object.defineProperty() 直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回这个对象
+		*/
+
+		// console.log(Number([].toString()))  //=>0
+		// console.log(Number([0].toString())) //=>0
+		// console.log([0].toString())         //=>0
+		// console.log([] == 0)                  //=>true
+		// console.log([] == [0])                //=>false
+		// console.log([] == false)              //=>true
+		// console.log('' == false)              //=>true
+		// console.log('' === false)              //=>false
+		// console.log(' ' == false)              //=>true
+		// console.log(' ' === false)              //=>false
+
+
+		let set = new Set(['a', 'b', 'c', 'd', 'e']);
+		let map = new Map();
+		map.set('title', 'es6');
+		map.set('year', 2016);
+		map.set('a', 'a10');
+		// console.log(set.has('a'))
+		// console.log(map.has('a'))
+		// console.log(set[a])
+		// console.log(map[a])
+		// console.log(set['a'])
+		// console.log(map['a'])
+		// console.log(set.a)
+		// console.log(map.a)
+		map.forEach((k, val, owner) => {
+			console.log('map-forEach-k-->:', k);
+			console.log('map-forEach-val-->:', val);
+			console.log('map-forEach-owner-->:', owner);
+		})
+	</script>
+</body>
+
 </html>

@@ -33,10 +33,10 @@
 				console.log(5)
 			}
 			Foo.getName() //2
-			getName()//4
+			getName()//4 var先提前声明了getName这个变量，然后到function声明和定义覆盖了getName为5，然后又到var定义变量getName去赋值，所以最后会把4赋值过去
 			Foo().getName()//1
 			getName()//1
-			new Foo.getName()//2  通过new执行函数
+			new Foo.getName()//2 通过new执行函数
 			new Foo().getName()//3  调用Foo类实例上的getName
 			new new Foo().getName()//3  多个new先执行最后那个New，new Foo()先创建一个Foo的类实例，再通过new方法执行实例上的方法
 		</script>
